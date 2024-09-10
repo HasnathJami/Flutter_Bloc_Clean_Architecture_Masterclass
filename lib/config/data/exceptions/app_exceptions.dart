@@ -10,7 +10,11 @@ class AppException implements Exception {
   }
 }
 
+/// Exception class representing a no internet connection error.
 class NoInternetException extends AppException {
+  /// Constructor for creating an [NoInternetException] instance
+  ///
+  /// The [message] parameter represents the error message.
   NoInternetException([String? message])
       : super(message, "No Internet Connection");
 }
