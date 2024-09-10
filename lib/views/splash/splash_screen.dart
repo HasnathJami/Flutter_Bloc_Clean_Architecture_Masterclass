@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_clean_architecture_masterclass/config/components/internet_exception_widget.dart';
-import 'package:flutter_bloc_clean_architecture_masterclass/config/data/exceptions/app_exceptions.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/config/services/splash/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,6 +9,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  SplashServices _splashServices = SplashServices();
+
+  @override
+  void initState() {
+    super.initState();
+    _splashServices.isLogin(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,29 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
-              // LoadingWidget(),
-              // RoundButton(title: 'Click Me', onPress: (){}, height: 100,),
-              // TextButton(
-              //     onPressed: () {
-              //       // Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-              //       Navigator.pushNamed(context, RoutesName.homeScreen);
-              //     },
-              //     child: Text('Home')),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: InternetExceptionWidget(
-                  onPress: () {},
-                ),
-              )
-            ],
-          ),
+          child: Text('Splash Screen', style: TextStyle(fontSize: 50),),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        // throw NoInternetException('Oh!');
-      }),
     );
   }
+
 }
