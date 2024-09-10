@@ -1,6 +1,6 @@
 # flutter_bloc_clean_architecture_masterclass
 
-Every about Clean Architecture with Bloc from Beginner to Advance
+Everything about Clean Architecture with Bloc from Beginner to Advance
 
 ## Getting Started
 
