@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/config/components/internet_exception_widget.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/config/data/exceptions/app_exceptions.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,6 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        // throw NoInternetException('Oh!');
+      }),
     );
   }
 }
