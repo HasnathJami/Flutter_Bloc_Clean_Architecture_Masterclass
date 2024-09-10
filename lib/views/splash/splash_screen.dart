@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: TextButton(
             onPressed: () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-              Navigator.pushNamed(context, RoutesName.splashScreen);
+              Navigator.pushNamed(context, RoutesName.homeScreen);
             },
             child: Text('Home')),
       ),
