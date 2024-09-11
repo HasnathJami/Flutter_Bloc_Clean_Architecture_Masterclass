@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/config/data/exceptions/app_exceptions.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/config/data/network/base_api_services.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +27,10 @@ class NetworkServicesApi implements BaseApiServices {
 
   @override
   Future<dynamic> postApi(String url, var data) async {
+    if (kDebugMode) {
+      print(url);
+      print(data);
+    }
     dynamic jsonResponse;
     try {
       final response = await http
@@ -43,7 +48,7 @@ class NetworkServicesApi implements BaseApiServices {
   }
 
   dynamic returnResponse(http.Response response) {
-    switch (response) {
+    switch (response.statusCode) {
       case 200:
         dynamic jsonResponse = jsonDecode(response.body);
         return jsonResponse;

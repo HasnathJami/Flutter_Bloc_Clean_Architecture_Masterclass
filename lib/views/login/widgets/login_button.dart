@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/bloc/login/login_bloc.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/utils/enums.dart';
 
 class LoginButton extends StatelessWidget {
   final formKey;
@@ -9,19 +10,37 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginStates>
-      (
-        buildWhen: (current, previous) => false,
-        builder: (context, state) {
-      return ElevatedButton(
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              // print('I am here');
-              if(state.password.length < 6)
-              print('please enter password greater than 6');
-            }
-          },
-          child: const Text('Login'));
-    });
+    return BlocListener<LoginBloc, LoginStates>(
+      listener: (context, state) {
+        if (state.postApiStatus == PostApiStatus.loading) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(const SnackBar(content: Text("submitting...")));
+        }
+
+        if (state.postApiStatus == PostApiStatus.success) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(content: Text(state.message.toString())));
+        }
+
+        if (state.postApiStatus == PostApiStatus.error) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(content: Text(state.message.toString())));
+        }
+      },
+      child: BlocBuilder<LoginBloc, LoginStates>(
+          buildWhen: (current, previous) => false,
+          builder: (context, state) {
+            return ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<LoginBloc>().add(LoginApi());
+                  }
+                },
+                child: const Text('Login'));
+          }),
+    );
   }
 }

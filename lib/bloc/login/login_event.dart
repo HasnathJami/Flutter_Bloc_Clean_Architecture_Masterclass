@@ -29,4 +29,4 @@ class EmailUnfocused extends LoginEvents {}
 
 class PasswordUnfocused extends LoginEvents {}
 
-class LoginButtonPress extends LoginEvents {}
+class LoginApi extends LoginEvents {}
