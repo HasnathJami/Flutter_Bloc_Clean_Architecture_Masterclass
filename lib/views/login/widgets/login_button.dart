@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/bloc/login/login_bloc.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/utils/enums.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/utils/flush_bar_helper.dart';
 
 class LoginButton extends StatelessWidget {
   final formKey;
@@ -11,31 +12,33 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginStates>(
-      listenWhen: (previous, current) {
-        return previous.postApiStatus != current.postApiStatus;
-      },
+      listenWhen: (previous, current) =>
+          previous.postApiStatus != current.postApiStatus,
       listener: (context, state) {
-        if (state.postApiStatus == PostApiStatus.loading) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(const SnackBar(content: Text("submitting...")));
-        }
+        // if (state.postApiStatus == PostApiStatus.loading) {
+        //   ScaffoldMessenger.of(context)
+        //     ..hideCurrentSnackBar()
+        //     ..showSnackBar(const SnackBar(content: Text("submitting...")));
+        // }
 
         if (state.postApiStatus == PostApiStatus.success) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text("Success:${state.message}")));
+          FlushBarHelper.flushBarSuccessMessage(state.message, context);
+          // ScaffoldMessenger.of(context)
+          //   ..hideCurrentSnackBar()
+          //   ..showSnackBar(SnackBar(content: Text("Success:${state.message}")));
         }
 
         if (state.postApiStatus == PostApiStatus.error) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-                SnackBar(content: Text("SuccessError:${state.message}")));
+          FlushBarHelper.flushBarErrorMessage(state.message, context);
+          // ScaffoldMessenger.of(context)
+          //   ..hideCurrentSnackBar()
+          //   ..showSnackBar(
+          //       SnackBar(content: Text("SuccessError:${state.message}")));
         }
       },
       child: BlocBuilder<LoginBloc, LoginStates>(
-          buildWhen: (current, previous) => false,
+          buildWhen: (previous, current) =>
+              previous.postApiStatus != current.postApiStatus,
           builder: (context, state) {
             return ElevatedButton(
                 onPressed: () {
@@ -43,7 +46,9 @@ class LoginButton extends StatelessWidget {
                     context.read<LoginBloc>().add(LoginApi());
                   }
                 },
-                child: const Text('Login'));
+                child: state.postApiStatus == PostApiStatus.loading
+                    ? CircularProgressIndicator()
+                    : const Text('Login'));
           }),
     );
   }
