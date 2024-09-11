@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bloc Clean Code',
-      initialRoute: RoutesName.splashScreen,
+      initialRoute: RoutesName.loginScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
