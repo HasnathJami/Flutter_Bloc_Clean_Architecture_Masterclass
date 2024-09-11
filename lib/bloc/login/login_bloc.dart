@@ -2,12 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/repository/auth/login_repository.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/utils/enums.dart';
+import 'package:get_it/get_it.dart';
 
 part 'login_event.dart';
 part 'login_states.dart';
 
 class LoginBloc extends Bloc<LoginEvents, LoginStates> {
-  LoginRepository loginRepository = LoginRepository();
+  // LoginRepository loginRepository = GetIt.instance<LoginRepository>();
+  LoginRepository loginRepository = GetIt.instance();
 
   LoginBloc() : super(const LoginStates()) {
     on<EmailChanged>(_onEmailChanged);
