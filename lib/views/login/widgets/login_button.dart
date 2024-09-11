@@ -11,6 +11,9 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginStates>(
+      listenWhen: (previous, current) {
+        return previous.postApiStatus != current.postApiStatus;
+      },
       listener: (context, state) {
         if (state.postApiStatus == PostApiStatus.loading) {
           ScaffoldMessenger.of(context)
@@ -21,13 +24,14 @@ class LoginButton extends StatelessWidget {
         if (state.postApiStatus == PostApiStatus.success) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(state.message.toString())));
+            ..showSnackBar(SnackBar(content: Text("Success:${state.message}")));
         }
 
         if (state.postApiStatus == PostApiStatus.error) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(state.message.toString())));
+            ..showSnackBar(
+                SnackBar(content: Text("SuccessError:${state.message}")));
         }
       },
       child: BlocBuilder<LoginBloc, LoginStates>(
