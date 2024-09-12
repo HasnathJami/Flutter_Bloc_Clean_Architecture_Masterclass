@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/repository/auth/login_repository.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/services/session_manager/session_controller.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/utils/enums.dart';
 import 'package:get_it/get_it.dart';
 
@@ -30,12 +31,14 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
 
     emit(state.copyWith(postApiStatus: PostApiStatus.loading));
 
-    await loginRepository.loginApi(data).then((value) {
+    await loginRepository.loginApi(data).then((value) async {
       if (value.error.isNotEmpty) {
         emit(state.copyWith(
             message: value.error.toString(),
             postApiStatus: PostApiStatus.error));
       } else {
+        await SessionController().saveUserInPreference(value);
+        await SessionController().getUserFromPreference();
         emit(state.copyWith(
             message: "Login successful", postApiStatus: PostApiStatus.success));
       }

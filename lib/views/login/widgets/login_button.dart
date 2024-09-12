@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/bloc/login/login_bloc.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/config/routes/routes_name.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/utils/enums.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/utils/flush_bar_helper.dart';
 
@@ -22,10 +23,11 @@ class LoginButton extends StatelessWidget {
         // }
 
         if (state.postApiStatus == PostApiStatus.success) {
-          FlushBarHelper.flushBarSuccessMessage(state.message, context);
+          // FlushBarHelper.flushBarSuccessMessage(state.message, context);
           // ScaffoldMessenger.of(context)
           //   ..hideCurrentSnackBar()
           //   ..showSnackBar(SnackBar(content: Text("Success:${state.message}")));
+          Navigator.pushNamed(context, RoutesName.homeScreen);
         }
 
         if (state.postApiStatus == PostApiStatus.error) {
