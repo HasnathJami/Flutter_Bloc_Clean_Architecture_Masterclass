@@ -29,22 +29,22 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
   void _loginApi(LoginApi event, Emitter<LoginStates> emit) async {
     Map data = {"email": state.email, "password": state.password};
 
-    emit(state.copyWith(postApiStatus: PostApiStatus.loading));
+    emit(state.copyWith(postApiStatus: ApiStatus.loading));
 
     await loginRepository.loginApi(data).then((value) async {
       if (value.error.isNotEmpty) {
         emit(state.copyWith(
             message: value.error.toString(),
-            postApiStatus: PostApiStatus.error));
+            postApiStatus: ApiStatus.error));
       } else {
         await SessionController().saveUserInPreference(value);
         await SessionController().getUserFromPreference();
         emit(state.copyWith(
-            message: "Login successful", postApiStatus: PostApiStatus.success));
+            message: "Login successful", postApiStatus: ApiStatus.success));
       }
     }).onError((error, stackTrace) {
       emit(state.copyWith(
-          message: error.toString(), postApiStatus: PostApiStatus.error));
+          message: error.toString(), postApiStatus: ApiStatus.error));
     });
   }
 }

@@ -22,7 +22,7 @@ class LoginButton extends StatelessWidget {
         //     ..showSnackBar(const SnackBar(content: Text("submitting...")));
         // }
 
-        if (state.postApiStatus == PostApiStatus.success) {
+        if (state.postApiStatus == ApiStatus.success) {
           // FlushBarHelper.flushBarSuccessMessage(state.message, context);
           // ScaffoldMessenger.of(context)
           //   ..hideCurrentSnackBar()
@@ -30,7 +30,7 @@ class LoginButton extends StatelessWidget {
           Navigator.pushNamed(context, RoutesName.homeScreen);
         }
 
-        if (state.postApiStatus == PostApiStatus.error) {
+        if (state.postApiStatus == ApiStatus.error) {
           FlushBarHelper.flushBarErrorMessage(state.message, context);
           // ScaffoldMessenger.of(context)
           //   ..hideCurrentSnackBar()
@@ -48,7 +48,7 @@ class LoginButton extends StatelessWidget {
                     context.read<LoginBloc>().add(LoginApi());
                   }
                 },
-                child: state.postApiStatus == PostApiStatus.loading
+                child: state.postApiStatus == ApiStatus.loading
                     ? CircularProgressIndicator()
                     : const Text('Login'));
           }),
