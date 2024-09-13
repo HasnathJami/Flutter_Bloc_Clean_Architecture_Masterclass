@@ -3,6 +3,8 @@ import 'package:flutter_bloc_clean_architecture_masterclass/config/routes/routes
 import 'package:flutter_bloc_clean_architecture_masterclass/config/routes/routes_name.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/repository/auth/login_http_api_repository.dart';
 import 'package:flutter_bloc_clean_architecture_masterclass/repository/auth/login_repository.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/repository/movies/movies_http_api_repository.dart';
+import 'package:flutter_bloc_clean_architecture_masterclass/repository/movies/movies_repository.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt getIt = GetIt.instance;
@@ -17,9 +19,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Bloc Clean Code',
-      initialRoute: RoutesName.splashScreen,
+      initialRoute: RoutesName.homeScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
@@ -27,4 +30,5 @@ class MyApp extends StatelessWidget {
 
 void serviceLocator() {
   getIt.registerLazySingleton<LoginRepository>(() => LoginHttpApiRepository());
+  getIt.registerLazySingleton<MoviesRepository>(() => MoviesHttpApiRepository());
 }

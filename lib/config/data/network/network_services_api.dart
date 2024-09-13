@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class NetworkServicesApi implements BaseApiServices {
   @override
-  Future<String> getApi(String url) async {
+  Future<dynamic> getApi(String url) async {
     dynamic jsonResponse;
     try {
       final response =
