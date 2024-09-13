@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bloc Clean Code',
-      initialRoute: RoutesName.homeScreen,
+      initialRoute: RoutesName.splashScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
